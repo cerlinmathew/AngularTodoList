@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Icon } from '../icon/icon';
 
 type FilterType = 'ALL' | 'Completed' | 'Incompleted';
 
 @Component({
   selector: 'app-dropdown',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, Icon],
   templateUrl: './dropdown.html',
 })
 export class Dropdown {
@@ -14,6 +16,8 @@ export class Dropdown {
   selected: FilterType = 'ALL';
 
   options: FilterType[] = ['ALL', 'Completed', 'Incompleted'];
+
+//   @Output does nothing only works on .emit() call
 
   @Output() filterChange = new EventEmitter<FilterType>();
 

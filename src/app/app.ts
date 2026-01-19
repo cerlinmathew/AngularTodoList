@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dropdown } from './dropdown/dropdown';
+import { Icon } from './icon/icon';
 
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, FormsModule, Dropdown],
+  standalone: true,
+  imports: [CommonModule, FormsModule, Dropdown, Icon],
   templateUrl: './app.html',
 })
 export class App {
@@ -64,7 +66,6 @@ export class App {
 
     const task = this.taskList.find(t => t.id === this.editingTaskId);
     if (task) task.task = this.task;
-
     this.closeModal();
   }
 
