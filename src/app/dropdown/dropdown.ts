@@ -17,7 +17,7 @@ export class Dropdown {
 
   options: FilterType[] = ['ALL', 'Completed', 'Incompleted'];
 
-//   @Output does nothing only works on .emit() call
+//   @Output  works on .emit() call
 
   @Output() filterChange = new EventEmitter<FilterType>();
 

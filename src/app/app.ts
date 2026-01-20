@@ -20,6 +20,33 @@ export class App {
 
   taskList: { id: number; task: string; completed: boolean }[] = [];
 
+  isDark = false;
+
+  constructor() {
+    // Load saved theme on app start
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.enableDark();
+    }
+  }
+
+  toggleTheme() {
+    this.isDark ? this.disableDark() : this.enableDark();
+  }
+
+  enableDark() {
+    document.documentElement.classList.add('dark');
+    this.isDark = true;
+    localStorage.setItem('theme', 'dark');
+  }
+
+  disableDark() {
+    document.documentElement.classList.remove('dark');
+    this.isDark = false;
+    localStorage.setItem('theme', 'light');
+  }
+
+
   //Edit state
   isEditMode = false;
   editingTaskId: number | null = null;
@@ -39,7 +66,7 @@ export class App {
     this.editingTaskId = null;
   }
 
-  //CREATE
+  //Create
   addTask() {
     if (!this.task.trim()) return;
 
@@ -60,7 +87,7 @@ export class App {
     this.task = item.task;
   }
 
-  //UPDATE
+  //Update
   updateTask() {
     if (!this.task.trim() || this.editingTaskId === null) return;
 

@@ -5,8 +5,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-icon',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './icon.html',
-  styleUrl: './icon.css',
+  templateUrl: './icon.html'
 })
 export class Icon {
   // parent sends data to child
