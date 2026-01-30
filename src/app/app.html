@@ -1,111 +1,86 @@
 <div class="min-h-screen bg-white dark:bg-slate-900 text-black dark:text-white transition-colors">
-    <div class="flex flex-col gap-6 items-center justify-start p-6 md:p-16 rounded-xl h-[95vh] w-fit m-auto relative">
+  <div class="flex flex-col gap-6 items-center justify-start p-6 md:p-16 rounded-xl h-[95vh] w-fit m-auto relative">
 
-        <!-- Title -->
-        <h1 class="font-bold text-[26px]">To-Do List</h1>
-        <div class="md:flex gap-4 flex flex-col md:flex-row">
+    <!-- Title -->
+    <h1 class="font-bold text-[26px]">To-Do List</h1>
 
-            <!-- Search -->
-            <div
-                class="flex items-center min-w-40 md:w-100 lg:w-150 px-4 py-2 rounded border border-[#6C63FF] text-black dark:text-black">
-                <input type="text" placeholder="Search task" class="w-full outline-none dark:text-white"
-                    [(ngModel)]="search" />
-                <app-icon name="search"></app-icon>
-            </div>
-            <div class="flex items-center justify-between md:gap-4">
-                <!-- Dropdown -->
-                <app-dropdown (filterChange)="setFilter($event)"></app-dropdown>
+    <!-- Search / Filter -->
+    <div class="md:flex gap-4 flex flex-col md:flex-row">
 
+      <div
+        class="flex items-center min-w-40 md:w-100 lg:w-150 px-4 py-2 rounded border border-[#6C63FF] text-black dark:text-black">
+        <input type="text" placeholder="Search task" class="w-full outline-none dark:text-white" [(ngModel)]="search" />
+        <app-icon name="search"></app-icon>
+      </div>
 
-                <button (click)="toggleTheme()"
-                    class="cursor-pointer p-2 rounded hover:bg-[#6C63FF] hover:text-white dark:hover:bg-[#6C63FF] transition">
+      <div class="flex items-center justify-between md:gap-4">
+        <app-dropdown (filterChange)="setFilter($event)"></app-dropdown>
 
-                    <app-icon *ngIf="!isDark" name="darkMode"></app-icon>
-                    <app-icon *ngIf="isDark" name="lightMode"></app-icon>
-                </button>
-            </div>
-
-
-        </div>
-
-        <!-- Task List -->
-        <div class="w-full flex flex-col gap-3 mt-4">
-
-            <div *ngIf="(filter === 'ALL' && !hasAnyTask) || (filter === 'Incompleted' && !hasIncomplete) || (filter === 'Completed' && !hasCompleted)"
-                class=" flex flex-col items-center gap-6 justify-center">
-                <app-icon name="noTask"></app-icon>
-                <div class="font-bold text-black dark:text-white">Empty...</div>
-            </div>
-
-            <!-- INCOMPLETE -->
-            <ng-container *ngIf="filter !== 'Completed' && hasIncomplete">
-                <h3 class="font-semibold text-[#6C63FF]">Incomplete</h3>
-                <div *ngFor="let item of incompleteTasks"
-                    class="flex justify-between items-center border-b border-black/30 dark:border-white/30 px-4 py-2">
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" [checked]="item.completed" (change)="toggleCompleted(item)"
-                            class="cursor-pointer" />
-                        <span>{{ item.task }}</span>
-                    </div>
-                    <!-- edit/del buttons -->
-                    <div class="flex gap-3">
-                        <button class="text-blue-500 text-sm cursor-pointer" (click)="openEditModal(item) ">
-                            <app-icon name="edit"></app-icon>
-                        </button>
-                        <button class="text-red-500 text-sm cursor-pointer" (click)="deleteTask(item.id)">
-                            <app-icon name="delete"></app-icon>
-                        </button>
-                    </div>
-                </div>
-            </ng-container>
-
-            <!-- COMPLETED -->
-            <ng-container *ngIf="filter !== 'Incompleted' && hasCompleted">
-                <h3 class="font-semibold text-[#6C63FF]">Completed</h3>
-                <div *ngFor="let item of completedTasks"
-                    class="flex justify-between items-center border-b border-black/30 dark:border-white/30 px-4 py-2 rounded">
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" [checked]="item.completed" (change)="toggleCompleted(item)"
-                            class="cursor-pointer" />
-                        <span class="line-through">{{ item.task }}</span>
-                    </div>
-                    <!-- edit/del buttons -->
-                    <button class="text-red-500 text-sm cursor-pointer" (click)="deleteTask(item.id)">
-                        <app-icon name="delete"></app-icon>
-                    </button>
-                </div>
-            </ng-container>
-        </div>
-
-        <!-- Modal -->
-
-        <!-- Only show this part if isModalOpen is true -->
-        <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-75 md:w-96 p-6">
-
-                <h2 class="text-lg font-bold mb-4 dark:text-black text-center">
-                    {{ isEditMode ? 'Edit Task' : 'Add New Task' }}
-                </h2>
-
-                <input type="text" placeholder="Enter task" class="border w-full px-3 py-2 rounded mb-4 dark:text-black"
-                    [(ngModel)]="task" (keyup.enter)="isEditMode ? updateTask() : addTask()" />
-
-                <div class="flex justify-end gap-3 dark:text-black">
-                    <button class="px-4 py-2 border rounded cursor-pointer hover:bg-[#f8f8f8]" (click)="closeModal()">
-                        Cancel
-                    </button>
-
-                    <button class="px-4 py-2 bg-[#6C63FF] text-white rounded cursor-pointer hover:bg-[#4138e6]"
-                        (click)="isEditMode ? updateTask() : addTask()">
-                        {{ isEditMode ? 'Update' : 'Add' }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Task Button -->
-        <button class="absolute bottom-0 right-0 cursor-pointer" (click)="openModal()">
-            <app-icon name="addTask"></app-icon>
+        <button (click)="toggleTheme()" class="cursor-pointer p-2 rounded bg-[#6C63FF] transition">
+          <app-icon *ngIf="!isDark" name="darkMode"></app-icon>
+          <app-icon *ngIf="isDark" name="lightMode"></app-icon>
         </button>
+      </div>
     </div>
+
+    <!-- TASK LIST -->
+    <div class="w-full flex flex-col gap-3 mt-4">
+
+      <!-- Empty -->
+      <div *ngIf="filteredTasks.length === 0" class="flex flex-col items-center gap-6 justify-center">
+        <app-icon name="noTask"></app-icon>
+        <div class="font-bold">Empty...</div>
+      </div>
+
+      <!-- Tasks -->
+      <div *ngFor="let item of filteredTasks"
+        class="flex justify-between items-center border-b border-black/30 dark:border-white/30 px-4 py-2">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" [checked]="item.completed" (change)="toggleCompleted(item)" class="cursor-pointer" />
+          <span [class.line-through]="item.completed">
+            {{ item.task }}
+          </span>
+        </div>
+
+        <div class="flex gap-3">
+          <button *ngIf="!item.completed" (click)="openEditModal(item)" class="cursor-pointer">
+            <app-icon name="edit"></app-icon>
+          </button>
+
+          <button (click)="deleteTask(item.id)" class="cursor-pointer">
+            <app-icon name="delete"></app-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg w-75 md:w-96 p-6">
+
+        <h2 class="text-lg font-bold mb-4 text-center">
+          {{ isEditMode ? 'Edit Task' : 'Add New Task' }}
+        </h2>
+
+        <input type="text" placeholder="Enter task" class="border w-full px-3 py-2 rounded mb-4" [(ngModel)]="task"
+          (keyup.enter)="isEditMode ? updateTask() : addTask()" />
+
+        <div class="flex justify-end gap-3">
+          <button (click)="closeModal()" class="px-4 py-2 border rounded">
+            Cancel
+          </button>
+
+          <button (click)="isEditMode ? updateTask() : addTask()" class="px-4 py-2 bg-[#6C63FF] text-white rounded">
+            {{ isEditMode ? 'Update' : 'Add' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Button -->
+    <button class="absolute bottom-0 right-0 cursor-pointer" (click)="openModal()">
+      <app-icon name="addTask"></app-icon>
+    </button>
+
+  </div>
 </div>
