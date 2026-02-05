@@ -58,19 +58,19 @@
     <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg w-75 md:w-96 p-6">
 
-        <h2 class="text-lg font-bold mb-4 text-center">
+        <h2 class="text-lg font-bold mb-4 text-center dark:text-black">
           {{ isEditMode ? 'Edit Task' : 'Add New Task' }}
         </h2>
 
-        <input type="text" placeholder="Enter task" class="border w-full px-3 py-2 rounded mb-4" [(ngModel)]="task"
+        <input type="text" placeholder="Enter task" class="border border-black/60 w-full px-3 py-2 rounded mb-4 dark:text-black" [(ngModel)]="task"
           (keyup.enter)="isEditMode ? updateTask() : addTask()" />
 
         <div class="flex justify-end gap-3">
-          <button (click)="closeModal()" class="px-4 py-2 border rounded">
+          <button (click)="closeModal()" class="px-4 py-2 border border-black/30 rounded cursor-pointer hover:bg-[#f2f2f3] dark:text-black hover:border-black/60">
             Cancel
           </button>
 
-          <button (click)="isEditMode ? updateTask() : addTask()" class="px-4 py-2 bg-[#6C63FF] text-white rounded">
+          <button (click)="isEditMode ? updateTask() : addTask()" class="px-4 py-2 bg-[#6C63FF] text-white rounded cursor-pointer hover:bg-[#5951f8] ">
             {{ isEditMode ? 'Update' : 'Add' }}
           </button>
         </div>

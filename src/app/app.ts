@@ -80,7 +80,6 @@ export class AppComponent implements OnInit {
     if (!this.task.trim()) return;
 
     const newTask: Partial<Todo> = {
-      id: Date.now(),
       task: this.task.trim(),
       completed: false,
     };
